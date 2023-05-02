@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace FlightReservationProject
 {
     /// <summary>
-    /// Interaction logic for Page2.xaml
+    /// Interaction logic for ChoseFlightWindow.xaml
     /// </summary>
-    public partial class Page2 : Window
+    public partial class ChoseFlightWindow : Window
     {
-        public Page2()
+        public ChoseFlightWindow()
         {
             InitializeComponent();
         }

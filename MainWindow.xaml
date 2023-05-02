@@ -5,25 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightReservationProject"
         mc:Ignorable="d"
-        Title="Flight Reservation" Height="450" Width="800">
-    <Grid>
+        Title="Flight Reservation"
+        SizeToContent="WidthAndHeight" Width="800" Height="500">
+    <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Username:" Grid.Row="0" Grid.Column="0" Margin="20"/>
-        <TextBox x:Name="UsernameTextBox" Grid.Row="0" Grid.Column="1" Margin="0,28,581,10"/>
+        <TextBlock Text="Username:" Margin="0,21,0,4"/>
+        <TextBox x:Name="UsernameTextBox" Width="150" Margin="0,40,540,21" Grid.RowSpan="2"/>
 
-        <TextBlock Text="Password:" Grid.Row="1" Grid.Column="0" Margin="20"/>
-        <PasswordBox x:Name="PasswordBox" Grid.Row="1" Grid.Column="1" Margin="0,28,581,10"/>
+        <TextBlock Text="Password:" Margin="0,21,0,4" Grid.Row="1"/>
+        <PasswordBox x:Name="PasswordBox" Margin="0,0,540,20" Width="150" Grid.Row="2"/>
 
-        <Button x:Name="LoginButton" Content="Login" Grid.Row="2" Grid.Column="1" Margin="16,10,598,10" Height="21" Width="90"/>
+        <Button x:Name="LoginButton" Content="Login" Height="24" Click="LoginButton_Click" Width="98" Grid.Row="3" Margin="41,10,0,270" HorizontalAlignment="Left"/>
     </Grid>
 </Window>

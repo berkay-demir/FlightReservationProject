@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
 using System.Configuration;
 
 namespace FlightReservationProject
@@ -43,15 +30,15 @@ namespace FlightReservationProject
 
             if (userType == 1)
             {
-                Page1 page1 = new Page1();
-                page1.Show();
+                AddFlightWindow window1 = new AddFlightWindow();
+                window1.Show();
                 conn.Close();
                 this.Close();
             }
             else if (userType == 2)
             {
-                Page2 page2 = new Page2();
-                page2.Show();
+                ChoseFlightWindow window2 = new ChoseFlightWindow();
+                window2.Show();
                 conn.Close();
                 this.Close();
             }
