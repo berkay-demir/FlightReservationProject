@@ -7,20 +7,22 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Add Flight" Height="450" Width="917">
-    <Grid Margin="10,30,10,30">
-        <TextBlock HorizontalAlignment="Left" Margin="45,34,0,0" TextWrapping="Wrap" Text="Departure City" VerticalAlignment="Top"/>
-        <ComboBox x:Name="DepartureCityComboBox" HorizontalAlignment="Left" Margin="45,55,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="286,37,0,0" TextWrapping="Wrap" Text="Destination City" VerticalAlignment="Top"/>
-        <ComboBox x:Name="DestinationCityComboBox" HorizontalAlignment="Left" Margin="286,55,0,0" VerticalAlignment="Top" Width="120"/>
-        <DatePicker x:Name="DepartureDatePicker" HorizontalAlignment="Left" Margin="45,127,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="45,106,0,0" TextWrapping="Wrap" Text="Departure Date" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="45,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141"><Run Text="Departure Time"/><Run Text=" "/><Run Language="tr-tr" Text="("/><Run Text="HH:mm"/><Run Language="tr-tr" Text=")"/></TextBlock>
-        <TextBox x:Name="DepartureTimeTextBox" HorizontalAlignment="Left" Margin="45,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="19"/>
-        <TextBlock HorizontalAlignment="Left" Margin="286,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"><Run Text="Flight Lenght"/><Run Language="tr-tr" Text=" (Hours)"/></TextBlock>
-        <TextBox x:Name="FlightLengthTextBox" HorizontalAlignment="Left" Margin="286,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
-        <TextBlock HorizontalAlignment="Left" Margin="496,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"><Run Language="tr-tr" Text="Plane Type"/></TextBlock>
-        <ComboBox x:Name="PlaneTypeComboBox" Margin="496,55,253,0" VerticalAlignment="Top"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="47,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.035,-0.92" Width="80" Click="Add_Flight_ClickButton"/>
-        
+    <Grid Margin="0,0,0,3">
+        <TextBlock HorizontalAlignment="Left" Margin="25,66,0,0" TextWrapping="Wrap" Text="Departure City" VerticalAlignment="Top"/>
+        <ComboBox x:Name="DepartureCityComboBox" HorizontalAlignment="Left" Margin="25,87,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="266,69,0,0" TextWrapping="Wrap" Text="Destination City" VerticalAlignment="Top"/>
+        <ComboBox x:Name="DestinationCityComboBox" HorizontalAlignment="Left" Margin="266,87,0,0" VerticalAlignment="Top" Width="120"/>
+        <DatePicker x:Name="DepartureDatePicker" HorizontalAlignment="Left" Margin="25,159,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,138,0,0" TextWrapping="Wrap" Text="Departure Date" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141"><Run Text="Departure Time"/><Run Text=" "/><Run Language="tr-tr" Text="("/><Run Text="HH:mm"/><Run Language="tr-tr" Text=")"/></TextBlock>
+        <TextBox x:Name="DepartureTimeTextBox" HorizontalAlignment="Left" Margin="25,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="19"/>
+        <TextBlock HorizontalAlignment="Left" Margin="266,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"><Run Text="Flight Lenght"/><Run Language="tr-tr" Text=" (Hours)"/></TextBlock>
+        <TextBox x:Name="FlightLengthTextBox" HorizontalAlignment="Left" Margin="266,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
+        <TextBlock HorizontalAlignment="Left" Margin="476,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"><Run Language="tr-tr" Text="Plane Type"/></TextBlock>
+        <ComboBox x:Name="PlaneTypeComboBox" Margin="476,87,273,0" VerticalAlignment="Top"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="27,283,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.035,-0.92" Width="80" Click="Add_Flight_ClickButton"/>
+        <Button Content="List Flights Page" HorizontalAlignment="Left" Margin="143,10,0,0" VerticalAlignment="Top" Height="33" Width="112" Click="List_Flights_Window_ClickButton"/>
+        <Button Content="Add Flight Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="33" Width="114"/>
+
     </Grid>
 </Window>

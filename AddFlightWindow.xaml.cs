@@ -117,6 +117,14 @@ namespace FlightReservationProject
             return quota;
         }
 
-        
+        private void List_Flights_Window_ClickButton(object sender, RoutedEventArgs e)
+        {
+            
+            ListFlightsAdminWindow listFlightsAdmin = new ListFlightsAdminWindow();
+            listFlightsAdmin.Show();
+            this.Close();
+
+        }
+
     }
 }
