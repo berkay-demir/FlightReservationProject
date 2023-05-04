@@ -78,10 +78,23 @@ namespace FlightReservationProject
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         {
                             connection.Open();
-                            string query = "DELETE FROM Flights WHERE PNR=@PNR";
-                            SqlCommand command = new SqlCommand(query, connection);
-                            command.Parameters.AddWithValue("@PNR", flight.PNR);
-                            int rowsAffected = command.ExecuteNonQuery();
+
+                            // Check if the quota of the flight matches the quota of the corresponding plane in the Planes table
+                            string checkQuotaQuery = "SELECT p.Quota FROM Flights f INNER JOIN Planes p ON f.Plane_Id = p.Id WHERE f.PNR=@PNR";
+                            SqlCommand checkQuotaCommand = new SqlCommand(checkQuotaQuery, connection);
+                            checkQuotaCommand.Parameters.AddWithValue("@PNR", flight.PNR);
+                            int planeQuota = (int)checkQuotaCommand.ExecuteScalar();
+                            if (planeQuota != flight.Quota)
+                            {
+                                MessageBox.Show("A user has a ticket for this flight. You can not delete it.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
+                            // Delete the flight from the Flights table
+                            string deleteQuery = "DELETE FROM Flights WHERE PNR=@PNR";
+                            SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection);
+                            deleteCommand.Parameters.AddWithValue("@PNR", flight.PNR);
+                            int rowsAffected = deleteCommand.ExecuteNonQuery();
                             if (rowsAffected > 0)
                             {
                                 flights.Remove(flight);
