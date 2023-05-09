@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -69,7 +70,7 @@ namespace FlightReservationProject
                 return;
             }
             float flightLength;
-            if (!float.TryParse(FlightLengthTextBox.Text, out flightLength))
+            if (!float.TryParse(FlightLengthTextBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out flightLength))
             {
                 MessageBox.Show("Invalid flight length. Please enter a valid number of hours.");
                 return;
@@ -78,8 +79,8 @@ namespace FlightReservationProject
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Flights (DepartureCity, DestinationCity, Quota, DepartureTime, ArrivalTime) " +
-                               "VALUES ( @departureCity, @destinationCity, @quota, @departureTime, @arrivalTime)";
+                string query = "INSERT INTO Flights (DepartureCity, DestinationCity, Quota, DepartureTime, ArrivalTime,Plane_Id) " +
+                               "VALUES ( @departureCity, @destinationCity, @quota, @departureTime, @arrivalTime,@planeId)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     
@@ -89,6 +90,7 @@ namespace FlightReservationProject
                     command.Parameters.AddWithValue("@quota", GetPlaneQuota(planeType));
                     command.Parameters.AddWithValue("@departureTime", departureDate.Add(departureTime));
                     command.Parameters.AddWithValue("@arrivalTime", arrivalTime);
+                    command.Parameters.AddWithValue("@planeId", GetPlaneId(planeType));
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -115,6 +117,23 @@ namespace FlightReservationProject
                 }
             }
             return quota;
+        }
+        private int GetPlaneId(string planeType)
+        {
+            int plane_id=0;
+            string query = "SELECT Id FROM Planes WHERE Plane_Type = @planeType";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@planeType", planeType);
+                connection.Open();
+                object result = command.ExecuteScalar();
+                if (result != null)
+                {
+                    plane_id = (int)result;
+                }
+            }
+            return plane_id;
         }
 
         private void List_Flights_Window_ClickButton(object sender, RoutedEventArgs e)

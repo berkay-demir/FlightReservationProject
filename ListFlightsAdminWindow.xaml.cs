@@ -41,14 +41,17 @@ namespace FlightReservationProject
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
+                    DateTime currentTime = DateTime.Now;
                     string query = "SELECT f.PNR, f.DepartureCity, f.DestinationCity, p.Plane_Type, f.Quota, f.DepartureTime, f.ArrivalTime " +
                             "FROM Flights f " +
                             "INNER JOIN Planes p ON f.Plane_Id = p.Id " +
-                            "WHERE f.DepartureCity=@dep AND f.DestinationCity=@des AND CAST(f.DepartureTime AS DATE) = @date";
+                            "WHERE f.DepartureCity=@dep AND f.DestinationCity=@des AND CAST(f.DepartureTime AS DATE) = @date AND f.DepartureTime > @currentTime" +
+                            "ORDER BY f.DepartureTime";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@dep", dep);
                     command.Parameters.AddWithValue("@des", des);
                     command.Parameters.AddWithValue("@date", date?.Date);
+                    command.Parameters.AddWithValue("@currentTime", currentTime);
                     SqlDataReader reader = command.ExecuteReader();
                     List<Flight> filteredFlights = new List<Flight>();
 
@@ -69,7 +72,8 @@ namespace FlightReservationProject
                     reader.Close();
                     FlightsDataGrid.ItemsSource = null;
                     FlightsDataGrid.ItemsSource = filteredFlights;
-                    string query2 = "SELECT COUNT(*) FROM Flights WHERE DepartureCity=@dep AND DestinationCity=@des AND CAST(DepartureTime AS DATE) = @date";
+                    string query2 = "SELECT COUNT(*) FROM Flights WHERE DepartureCity=@dep AND DestinationCity=@des AND CAST(DepartureTime AS DATE) = @date AND f.DepartureTime > @currentTime " +
+                       "ORDER BY f.DepartureTime";
                     SqlCommand command2 = new SqlCommand(query2, connection);
                     command2.Parameters.AddWithValue("@dep", dep);
                     command2.Parameters.AddWithValue("@des", des);

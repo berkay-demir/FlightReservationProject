@@ -44,13 +44,18 @@ namespace FlightReservationProject
         {
             try
             {
+                
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
+                    DateTime currentTime = DateTime.Now;
                     string query = "SELECT f.PNR, f.DepartureCity, f.DestinationCity, p.Plane_Type, f.Quota, f.DepartureTime, f.ArrivalTime " +
-                                   "FROM Flights f " +
-                                   "INNER JOIN Planes p ON f.Plane_Id = p.Id";
+                           "FROM Flights f " +
+                           "INNER JOIN Planes p ON f.Plane_Id = p.Id " +
+                           "WHERE f.DepartureTime > @currentTime " +
+                           "ORDER BY f.DepartureTime";
                     SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@currentTime", currentTime);
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
@@ -88,15 +93,19 @@ namespace FlightReservationProject
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    
                     connection.Open();
+                    DateTime currentTime = DateTime.Now;
                     string query = "SELECT f.PNR, f.DepartureCity, f.DestinationCity, p.Plane_Type, f.Quota, f.DepartureTime, f.ArrivalTime " +
-                    "FROM Flights f " +
-                    "INNER JOIN Planes p ON f.Plane_Id = p.Id " +
-                    "WHERE f.DepartureCity=@dep AND f.DestinationCity=@des AND CAST(f.DepartureTime AS DATE) = @date AND f.Quota > 0";
+                       "FROM Flights f " +
+                       "INNER JOIN Planes p ON f.Plane_Id = p.Id " +
+                       "WHERE f.DepartureCity=@dep AND f.DestinationCity=@des AND CAST(f.DepartureTime AS DATE) = @date AND f.Quota > 0 AND f.DepartureTime > @currentTime " +
+                       "ORDER BY f.DepartureTime";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@dep", dep);
                     command.Parameters.AddWithValue("@des", des);
                     command.Parameters.AddWithValue("@date", date?.Date);
+                    command.Parameters.AddWithValue("@currentTime", currentTime);
                     SqlDataReader reader = command.ExecuteReader();
                     List<Flight> filteredFlights = new List<Flight>();
 
