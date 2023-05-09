@@ -7,6 +7,23 @@
         mc:Ignorable="d"
         Title="ChoseFlightWindow" Height="450" Width="800">
     <Grid>
-        
+
+        <Button x:Name="sortButton" Content="Sort" HorizontalAlignment="Left" Margin="537,15,0,0" VerticalAlignment="Top" Width="74" Height="22" Click="Sort"/>
+        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="119" IsEditable="True" IsReadOnly="True" Text="Departure" Height="22"/>
+        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="142,15,0,0" VerticalAlignment="Top" Width="119" IsEditable="True" IsReadOnly="True" Text="Destination" Height="22"/>
+        <DataGrid x:Name="FlightsDataGrid" ItemsSource="{Binding Flights}" AutoGenerateColumns="False" Height="261" VerticalAlignment="Center" Margin="10,0,10,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="PNR" Binding="{Binding PNR}" />
+                <DataGridTextColumn Header="Departure City" Binding="{Binding DepartureCity}" />
+                <DataGridTextColumn Header="Destination City" Binding="{Binding DestinationCity}" />
+                <DataGridTextColumn Header="Plane Type" Binding="{Binding PlaneType}" />
+                <DataGridTextColumn Header="Quota" Binding="{Binding Quota}" />
+                <DataGridTextColumn Header="Departure Time" Binding="{Binding DepartureTime}" />
+                <DataGridTextColumn Header="Arrival Time" Binding="{Binding ArrivalTime}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="chooseButton" Content="Choose Flight" HorizontalAlignment="Left" Margin="503,332,0,0" VerticalAlignment="Top" Width="108" Height="27" Click="chooseButton_Click"/>
+        <DatePicker  x:Name="datePicker1" HorizontalAlignment="Left" Margin="276,15,0,0" VerticalAlignment="Top" Height="22" Width="119"/>
     </Grid>
+
 </Window>

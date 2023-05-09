@@ -10,7 +10,7 @@ namespace FlightReservationProject
     public partial class AddFlightWindow : Window
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["FlightReservationProject.Properties.Settings.FlightReservationConnectionString"].ConnectionString;
-
+        
         public AddFlightWindow()
         {
             InitializeComponent();

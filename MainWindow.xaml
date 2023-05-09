@@ -22,5 +22,6 @@
         <PasswordBox x:Name="PasswordBox" Margin="0,0,540,20" Width="150" Grid.Row="2"/>
 
         <Button x:Name="LoginButton" Content="Login" Height="24" Click="LoginButton_Click" Width="98" Grid.Row="3" Margin="41,10,0,270" HorizontalAlignment="Left"/>
+        <Button x:Name="SignInButton" Content="Sign In" Height="24" Click="SignUpButton_Click" Width="98" Grid.Row="3" HorizontalAlignment="Left" Margin="41,53,0,227"/>
     </Grid>
 </Window>

@@ -22,12 +22,66 @@ namespace FlightReservationProject
             InitializeComponent();
             LoadFlights();
             DataContext = this;
+            comboBox1.ItemsSource = Flights.Select(f => f.DepartureCity).Distinct();
+            comboBox2.ItemsSource = Flights.Select(f => f.DestinationCity).Distinct();
         }
 
         public List<Flight> Flights
         {
             get { return flights; }
             set { flights = value; }
+        }
+        private void Sort(object sender, RoutedEventArgs e)
+        {
+            var dep = comboBox1.Text;
+            var des = comboBox2.Text;
+            var date = datePicker1.SelectedDate;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT f.PNR, f.DepartureCity, f.DestinationCity, p.Plane_Type, f.Quota, f.DepartureTime, f.ArrivalTime " +
+                            "FROM Flights f " +
+                            "INNER JOIN Planes p ON f.Plane_Id = p.Id " +
+                            "WHERE f.DepartureCity=@dep AND f.DestinationCity=@des AND CAST(f.DepartureTime AS DATE) = @date";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@dep", dep);
+                    command.Parameters.AddWithValue("@des", des);
+                    command.Parameters.AddWithValue("@date", date?.Date);
+                    SqlDataReader reader = command.ExecuteReader();
+                    List<Flight> filteredFlights = new List<Flight>();
+
+                    while (reader.Read())
+                    {
+                        Flight flight = new Flight
+                        {
+                            PNR = (int)reader["PNR"],
+                            DepartureCity = reader["DepartureCity"].ToString(),
+                            DestinationCity = reader["DestinationCity"].ToString(),
+                            PlaneType = reader["Plane_Type"].ToString(),
+                            Quota = (int)reader["Quota"],
+                            DepartureTime = (DateTime)reader["DepartureTime"],
+                            ArrivalTime = (DateTime)reader["ArrivalTime"]
+                        };
+                        filteredFlights.Add(flight);
+                    }
+                    reader.Close();
+                    FlightsDataGrid.ItemsSource = null;
+                    FlightsDataGrid.ItemsSource = filteredFlights;
+                    string query2 = "SELECT COUNT(*) FROM Flights WHERE DepartureCity=@dep AND DestinationCity=@des AND CAST(DepartureTime AS DATE) = @date";
+                    SqlCommand command2 = new SqlCommand(query2, connection);
+                    command2.Parameters.AddWithValue("@dep", dep);
+                    command2.Parameters.AddWithValue("@des", des);
+                    command2.Parameters.AddWithValue("@date", date?.Date);
+                    int count = (int)command2.ExecuteScalar();
+                    MessageBox.Show(count + " flights found between " + dep + " and " + des);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void LoadFlights()
@@ -72,9 +126,10 @@ namespace FlightReservationProject
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this flight?", "Delete Flight", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    Flight flight = (Flight)FlightsDataGrid.SelectedItem;
+                    
                     try
                     {
+                        Flight flight = (Flight)FlightsDataGrid.SelectedItem;
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         {
                             connection.Open();
