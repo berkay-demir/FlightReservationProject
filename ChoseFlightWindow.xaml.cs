@@ -52,7 +52,7 @@ namespace FlightReservationProject
                     string query = "SELECT f.PNR, f.DepartureCity, f.DestinationCity, p.Plane_Type, f.Quota, f.DepartureTime, f.ArrivalTime " +
                            "FROM Flights f " +
                            "INNER JOIN Planes p ON f.Plane_Id = p.Id " +
-                           "WHERE f.DepartureTime > @currentTime " +
+                           "WHERE f.DepartureTime > @currentTime AND f.Quota > 0" +
                            "ORDER BY f.DepartureTime";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@currentTime", currentTime);
@@ -195,6 +195,10 @@ namespace FlightReservationProject
             
         }
 
+        private void showAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            FlightsDataGrid.ItemsSource = flights;
+        }
     }
     public class Flights
     {

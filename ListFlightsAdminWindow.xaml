@@ -22,6 +22,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="DeleteButton" Content="Delete" Click="DeleteButton_Click" HorizontalAlignment="Right" Margin="0,55,10,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="ShowAllButton" Content="Show All" Click="ShowAllButton_Click" HorizontalAlignment="Right" Margin="0,56,150,0" VerticalAlignment="Top" Width="75"/>
         <DatePicker  x:Name="datePicker1" HorizontalAlignment="Left" Margin="276,55,0,0" VerticalAlignment="Top" Height="22" Width="119"/>
         <Button Content="List Flights Page" HorizontalAlignment="Left" Margin="143,10,0,0" VerticalAlignment="Top" Height="33" Width="112" />
         <Button Content="Add Flight Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="33" Width="114" Click="Add_Flights_Window_ClickButton"/>

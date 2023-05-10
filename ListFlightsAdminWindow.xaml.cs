@@ -45,7 +45,7 @@ namespace FlightReservationProject
                     string query = "SELECT f.PNR, f.DepartureCity, f.DestinationCity, p.Plane_Type, f.Quota, f.DepartureTime, f.ArrivalTime " +
                             "FROM Flights f " +
                             "INNER JOIN Planes p ON f.Plane_Id = p.Id " +
-                            "WHERE f.DepartureCity=@dep AND f.DestinationCity=@des AND CAST(f.DepartureTime AS DATE) = @date AND f.DepartureTime > @currentTime" +
+                            "WHERE f.DepartureCity=@dep AND f.DestinationCity=@des AND CAST(f.DepartureTime AS DATE) = @date AND f.DepartureTime > @currentTime " +
                             "ORDER BY f.DepartureTime";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@dep", dep);
@@ -68,8 +68,13 @@ namespace FlightReservationProject
                             ArrivalTime = (DateTime)reader["ArrivalTime"]
                         };
                         filteredFlights.Add(flight);
+
                     }
                     reader.Close();
+
+                    // Sort the flights by departure time
+                    filteredFlights = filteredFlights.OrderBy(f => f.DepartureTime).ToList();
+
                     FlightsDataGrid.ItemsSource = null;
                     FlightsDataGrid.ItemsSource = filteredFlights;
                     string query2 = "SELECT COUNT(*) FROM Flights WHERE DepartureCity=@dep AND DestinationCity=@des AND CAST(DepartureTime AS DATE) = @date AND f.DepartureTime > @currentTime " +
@@ -78,8 +83,10 @@ namespace FlightReservationProject
                     command2.Parameters.AddWithValue("@dep", dep);
                     command2.Parameters.AddWithValue("@des", des);
                     command2.Parameters.AddWithValue("@date", date?.Date);
+                    command.Parameters.AddWithValue("@currentTime", currentTime);
                     int count = (int)command2.ExecuteScalar();
                     MessageBox.Show(count + " flights found between " + dep + " and " + des);
+
                 }
             }
             catch (Exception ex)
@@ -158,12 +165,14 @@ namespace FlightReservationProject
                             {
                                 flights.Remove(flight);
                                 FlightsDataGrid.Items.Refresh();
+                                FlightsDataGrid.Items.Refresh();
                                 MessageBox.Show("Flight deleted successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                             else
                             {
                                 MessageBox.Show("Flight could not be deleted", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
+                            connection.Close();
                         }
                     }
                     catch (Exception ex)
@@ -184,6 +193,11 @@ namespace FlightReservationProject
             addFlightsAdmin.Show();
             this.Close();
 
+        }
+
+        private void ShowAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            FlightsDataGrid.ItemsSource = flights;
         }
     }
     public class Flight
